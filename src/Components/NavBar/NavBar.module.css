@@ -13,5 +13,17 @@
 }
 
 .link:hover {
-  color: #EB6440;
+  color: #eb6440;
+}
+
+.image {
+  width: 40px;
+}
+
+.logout {
+  cursor: pointer;
+}
+
+.logout:hover {
+  color: #eb6440;
 }

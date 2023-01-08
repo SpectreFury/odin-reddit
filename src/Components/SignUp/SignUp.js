@@ -1,14 +1,14 @@
 import React, { useRef } from "react";
 
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import app from "../../firebaseConfig";
-import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
 import styles from "./SignUp.module.css";
 
 const auth = getAuth(app);
 
-const SignUp = () => {
+const SignUp = (props) => {
   const emailRef = useRef();
   const passwordRef = useRef();
   const passwordConfirmRef = useRef();
@@ -29,7 +29,9 @@ const SignUp = () => {
     });
   }
 
-  return (
+  return props.isLoggedIn ? (
+    <Navigate to="/dashboard" />
+  ) : (
     <div>
       <form className={styles.form} onSubmit={signUp}>
         <h1 className={styles.header}>Sign Up</h1>
