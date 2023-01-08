@@ -1,7 +1,13 @@
 import React, { useState, useRef } from "react";
 
 import app from "../../firebaseConfig";
-import { getFirestore, collection, addDoc } from "firebase/firestore";
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  doc,
+  updateDoc,
+} from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
@@ -44,8 +50,13 @@ const SubmitForm = () => {
             content: contentRef.current.value,
             upvotes: 0,
             image: url,
+            comments: [],
           }).then((data) => {
-            navigate("/dashboard");
+            updateDoc(doc(db, "posts", data.id), {
+              id: data.id,
+            }).then(() => {
+              navigate("/dashboard");
+            });
           });
         });
       });
@@ -57,8 +68,13 @@ const SubmitForm = () => {
         content: contentRef.current.value,
         upvotes: 0,
         image: null,
+        comments: [],
       }).then((data) => {
-        navigate("/dashboard");
+        updateDoc(doc(db, "posts", data.id), {
+          id: data.id,
+        }).then(() => {
+          navigate("/dashboard");
+        });
       });
     }
   }

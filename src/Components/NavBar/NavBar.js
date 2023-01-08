@@ -22,7 +22,15 @@ const NavBar = (props) => {
 
   return (
     <nav className={styles.navbar}>
-      <img src={Logo} alt="Logo" width="40" />
+      <img
+        src={Logo}
+        alt="Logo"
+        width="40"
+        className={styles.logo}
+        onClick={() => {
+          navigate("/dashboard");
+        }}
+      />
       {props.isLoggedIn ? (
         <a className={styles.logout} onClick={logout}>
           Log Out

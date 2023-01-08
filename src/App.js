@@ -10,6 +10,7 @@ import Login from "./Components/Login/Login";
 import Dashboard from "./Components/Dashboard/Dashboard";
 import PrivateRoute from "./Components/PrivateRoute/PrivateRoute";
 import SubmitForm from "./Components/SubmitForm/SubmitForm";
+import Thread from "./Components/Thread/Thread";
 
 const auth = getAuth(app);
 
@@ -45,6 +46,14 @@ function App() {
           element={
             <PrivateRoute isLoggedIn={isLoggedIn}>
               <SubmitForm />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/:id"
+          element={
+            <PrivateRoute isLoggedIn={isLoggedIn}>
+              <Thread />
             </PrivateRoute>
           }
         />
