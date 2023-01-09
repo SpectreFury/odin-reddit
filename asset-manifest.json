@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/odin-reddit/static/css/main.7a0d91f4.css",
-    "main.js": "/odin-reddit/static/js/main.ce9fc297.js",
+    "main.js": "/odin-reddit/static/js/main.406a2bae.js",
     "static/media/reddit-logo.png": "/odin-reddit/static/media/reddit-logo.b31490f4d2c259eabebd.png",
     "index.html": "/odin-reddit/index.html",
     "static/media/chevron-down-solid.svg": "/odin-reddit/static/media/chevron-down-solid.bdc5512bebaafee5cfb979d7683ecb5e.svg",
     "static/media/chevron-up-solid.svg": "/odin-reddit/static/media/chevron-up-solid.0fab3e8c7e4f106fee079a2fdd13ffa2.svg",
     "main.7a0d91f4.css.map": "/odin-reddit/static/css/main.7a0d91f4.css.map",
-    "main.ce9fc297.js.map": "/odin-reddit/static/js/main.ce9fc297.js.map"
+    "main.406a2bae.js.map": "/odin-reddit/static/js/main.406a2bae.js.map"
   },
   "entrypoints": [
     "static/css/main.7a0d91f4.css",
-    "static/js/main.ce9fc297.js"
+    "static/js/main.406a2bae.js"
   ]
 }
