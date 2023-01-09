@@ -48,7 +48,8 @@ const SubmitForm = () => {
             user: `u/${getUsername(currentUser.email)}`,
             title: titleRef.current.value,
             content: contentRef.current.value,
-            upvotes: 0,
+            upvotedUsers: [],
+            downvotedUsers: [],
             image: url,
             comments: [],
           }).then((data) => {
@@ -66,7 +67,8 @@ const SubmitForm = () => {
         user: `u/${getUsername(currentUser.email)}`,
         title: titleRef.current.value,
         content: contentRef.current.value,
-        upvotes: 0,
+        upvotedUsers: [],
+        downvotedUsers: [],
         image: null,
         comments: [],
       }).then((data) => {

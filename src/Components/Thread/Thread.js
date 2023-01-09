@@ -13,7 +13,7 @@ import {
   doc,
   updateDoc,
   arrayUnion,
-  serverTimestamp,
+  arrayRemove,
 } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 
@@ -30,6 +30,7 @@ const Thread = () => {
   const [post, setPost] = useState({});
   const [hasUpvoted, setHasUpvoted] = useState(false);
   const [hasDownvoted, setHasDownvoted] = useState(false);
+  const [totalUpvotes, setTotalUpvotes] = useState(0);
 
   const { currentUser } = auth;
 
@@ -44,6 +45,59 @@ const Thread = () => {
       });
     });
   }, []);
+
+  useEffect(() => {
+    if (Object.keys(post).length > 0) {
+      setTotalUpvotes(post.upvotedUsers.length - post.downvotedUsers.length);
+      if (
+        hasUpvoted &&
+        !post.upvotedUsers.includes(`u/${currentUser.email.split("@")[0]}`)
+      ) {
+        console.log("Upvoted with no user");
+        updateDoc(doc(db, "posts", post.id), {
+          upvotedUsers: arrayUnion(`u/${currentUser.email.split("@")[0]}`),
+          downvotedUsers: arrayRemove(`u/${currentUser.email.split("@")[0]}`),
+        }).then(() => {
+          setTotalUpvotes(
+            post.upvotedUsers.length - post.downvotedUsers.length
+          );
+        });
+      } else if (
+        hasDownvoted &&
+        !post.downvotedUsers.includes(`u/${currentUser.email.split("@")[0]}`)
+      ) {
+        console.log("Downvoted with no user");
+        updateDoc(doc(db, "posts", post.id), {
+          downvotedUsers: arrayUnion(`u/${currentUser.email.split("@")[0]}`),
+          upvotedUsers: arrayRemove(`u/${currentUser.email.split("@")[0]}`),
+        }).then(() => {
+          setTotalUpvotes(
+            post.upvotedUsers.length - post.downvotedUsers.length
+          );
+        });
+      } else if (
+        hasUpvoted &&
+        post.upvotedUsers.includes(`u/${currentUser.email.split("@")[0]}`)
+      ) {
+        console.log("Upvoted with existing user");
+        updateDoc(doc(db, "posts", post.id), {
+          upvotedUsers: arrayRemove(`u/${currentUser.email.split("@")[0]}`),
+        }).then(() => {
+          console.log("Removed exisiting user");
+        });
+      } else if (
+        hasDownvoted &&
+        post.downvotedUsers.includes(`u/${currentUser.email.split("@")[0]}`)
+      ) {
+        console.log("Downvoted with existing user");
+        updateDoc(doc(db, "posts", post.id), {
+          downvotedUsers: arrayRemove(`u/${currentUser.email.split("@")[0]}`),
+        }).then(() => {
+          console.log("Removed exisiting user");
+        });
+      }
+    }
+  }, [post]);
 
   function upvote() {
     setPost((prev) => {
@@ -106,7 +160,7 @@ const Thread = () => {
           <button className={styles.button} onClick={upvote}>
             <img src={ArrowUp} width="20" />
           </button>
-          <div>{post.upvotes}</div>
+          <div>{totalUpvotes}</div>
           <button className={styles.button} onClick={downvote}>
             <img src={ArrowDown} width="20" />
           </button>
